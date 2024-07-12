@@ -1,5 +1,5 @@
 {
-  description = "Node LTS developer setup";
+  description = "Bun developer shell";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -9,24 +9,19 @@
   outputs = { self, nixpkgs, utils, ... }:
     utils.lib.eachDefaultSystem (system:
       let
-        overlays = [
-          (final: prev: {
-            nodejs = prev.nodejs_20;
-          })
-        ];
-        pkgs = import nixpkgs { inherit overlays system; };
+        pkgs = import nixpkgs { inherit system; };
       in
       with pkgs;
       {
         packages.default = buildEnv {
           name = "devel";
-          paths = [ nodejs nodePackages.prettier ];
+          paths = [ bun ];
         };
 
         devShells.default = mkShell {
           packages = [ self.packages.${system}.default ];
           shellHook = ''
-            node
+            bun
           '';
         };
       });

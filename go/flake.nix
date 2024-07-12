@@ -1,5 +1,5 @@
 {
-  description = "Deno developer shell";
+  description = "Go developer shell";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -15,13 +15,12 @@
       {
         packages.default = buildEnv {
           name = "devel";
-          paths = [ deno ];
+          paths = [ go gopls goperf ];
         };
 
         devShells.default = mkShell {
           packages = [ self.packages.${system}.default ];
           shellHook = ''
-            deno
           '';
         };
       });
