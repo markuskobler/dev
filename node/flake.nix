@@ -19,9 +19,7 @@
       with pkgs;
       {
         packages.default = buildEnv {
-          name = "devel";
-          paths = 
-            [ nodejs ] ++ (with nodePackages; [ prettier prettier-plugin-toml ]);
+          name = "devel"; paths = [ nodejs yarn pnpm ];
         };
 
         devShells.default = mkShell {
